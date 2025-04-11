@@ -1,0 +1,27 @@
+--------------------------------------------------------------------------------
+Copyright (c) 2025 Gabriele Lozupone (University of Cassino and Southern Lazio).
+All rights reserved.
+--------------------------------------------------------------------------------
+
+LICENSE NOTICE
+************************************************************************************************************************
+By downloading/using/running/editing/changing any portion of codes in this package you agree to this license. If you do
+not agree to this license, do not download/use/run/edit/change this code.
+************************************************************************************************************************
+1. This material is free for non-profit research, but needs a special license for any commercial purpose. Please contact
+   Gabriele Lozupone at gabriele.lozupone@unicas.it for further details.
+2. You agree to appropriately cite this work in your related studies and publications.
+   Lozupone, G. et al., "Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised
+                         Representation Learning in Medical Imaging – A Case Study on Alzheimer’s Disease".
+
+3. This material is provided by the copyright holder (Gabriele Lozupone), University of Cassino and Southern Lazio, and
+   contributors "as is" and any express or implied warranties, including, but not limited to, any implied warranties of
+   merchantability, non-infringement, or fitness for a particular purpose are disclaimed. In no event shall the
+   copyright owner, University of Cassino and Southern Lazio, or contributors be liable for any direct, indirect,
+   incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute
+   goods or services; loss of use, data, or profits; reasonable royalties; or business interruption) however caused and
+   on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise)
+   arising in any way out of the use of this software, even if advised of the possibility of such damage.
+4. Neither the name of University of Cassino and Southern Lazio, nor Gabriele Lozupone, may be used to endorse or
+   promote products derived from this software without specific prior written permission.
+************************************************************************************************************************

@@ -1,0 +1,94 @@
+# config.yaml
+fit:
+    seed_everything: 42
+    model:
+        class_path: src.ldae.EncoderClassifier
+        init_args:
+            backbone_args:
+                net_class_path: torchvision.models.convnext_small
+                weights: torchvision.models.ConvNeXt_Small_Weights.DEFAULT
+                freeze_perc: 0.0
+                grayscale: True
+            lr: 1.0e-6
+            embedding_dim: 768
+            epochs: ${fit.trainer.max_epochs}
+            num_classes: 2
+            load_size: 128
+    data:
+        csv_path: { INSERT_PATH_TO_CSV }
+        load_latents: false
+        load_images: true
+        batch_size: 4
+        num_workers: 16
+        val_size: 0.3
+        test_size: 0.1
+        resize_to: [128, 160, 128]
+        fake_3d: true
+        classes: ['AD', 'CN']
+        balance_classes: false
+        slicing_plane: axial
+        seed: 42
+        apply_augmentation: false
+    trainer:
+        accelerator: gpu
+        devices: [0]
+        max_epochs: 50
+        logger:
+          class_path: lightning.pytorch.loggers.WandbLogger
+          init_args:
+            name: ad_vs_cn_${fit.model.class_path}_${fit.model.init_args.backbone_args.net_class_path}_${fit.model.init_args.backbone_args.freeze_perc}
+            project: Representation-Learning-Baseline
+        accumulate_grad_batches: 2
+        precision: 16-mixed
+        gradient_clip_val: 1.0
+    early_stopping:
+        monitor: val_mcc
+        patience: 5
+        mode: max
+        verbose: true
+    model_checkpoint:
+        monitor: val_mcc
+        mode: max
+        auto_insert_metric_name: false
+        filename: best
+        save_last: true
+        dirpath: ${fit.trainer.logger.init_args.project}/${fit.trainer.logger.init_args.name}/checkpoints/
+test:
+    seed_everything: 42
+    model:
+        class_path: src.ldae.EncoderClassifier
+        init_args:
+            backbone_args:
+                net_class_path: ${fit.model.init_args.backbone_args.net_class_path}
+                weights: ${fit.model.init_args.backbone_args.weights}
+                freeze_perc: ${fit.model.init_args.backbone_args.freeze_perc}
+                grayscale: ${fit.model.init_args.backbone_args.grayscale}
+            embedding_dim: ${fit.model.init_args.embedding_dim}
+            num_classes: ${fit.model.init_args.num_classes}
+            load_size: ${fit.model.init_args.load_size}
+    data:
+        csv_path: ${fit.data.csv_path}
+        load_latents: ${fit.data.load_latents}
+        batch_size: 1
+        num_workers: ${fit.data.num_workers}
+        val_size: ${fit.data.val_size}
+        test_size: ${fit.data.test_size}
+        resize_to: ${fit.data.resize_to}
+        fake_3d: ${fit.data.fake_3d}
+        classes: ${fit.data.classes}
+        balance_classes: ${fit.data.balance_classes}
+        slicing_plane: ${fit.data.slicing_plane}
+        seed: ${fit.data.seed}
+        apply_augmentation: ${fit.data.apply_augmentation}
+    trainer:
+        accelerator: gpu
+        devices: [0]
+        max_epochs: 1
+        logger:
+            class_path: ${fit.trainer.logger.class_path}
+            init_args:
+                name: ${fit.trainer.logger.init_args.name}
+                project: ${fit.trainer.logger.init_args.project}
+    early_stopping:
+        monitor: test_loss
+    ckpt_path: ${fit.model_checkpoint.dirpath}best.ckpt

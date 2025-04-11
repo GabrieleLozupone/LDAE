@@ -1,0 +1,107 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# PyTorch & Deep Learning
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.h5
+*.safetensors
+logs/
+runs/
+wandb/
+lightning_logs/
+tb_logs/
+mlruns/
+
+
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# Dataset and models
+/data/
+/models/*
+*.npz
+*.npy
+*.hdf5
+*.pkl
+
+# Exceptions for specific model files
+!/models/semantic_mean.pt
+!/models/semantic_std.pt
+!/models/disease_classifier.ckpt
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+latent_paths/
+results/
+/outputs/
+/viz/
+*.csv
+*.json
+*.log
+
+# Ignore all files in samples directory
+/samples/*
+# But keep this specific file
+!/samples/sample_t1.nii.gz
+
+# Large files
+*.tgz
+*.tar.gz
+*.zip
+*.7z
+
+# Specific to ADNI dataset
+preprocessed/
+raw_data/
+
+# Additional specific files to ignore
+*.pdf
+docker_run.sh
+PROJECT.md
+runs/ 
+scripts/age_evolution.py
+scripts/interpolate.py
+scripts/manipulate.py

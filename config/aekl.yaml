@@ -1,0 +1,78 @@
+# config.yaml
+fit:
+    seed_everything: 42
+    model:
+        class_path: src.ldae.LitAutoencoderKL
+        init_args:
+            aekl_args:
+                spatial_dims: 3
+                in_channels: 1
+                out_channels: 1
+                num_channels: [64, 128, 128, 128]
+                latent_channels: 3
+                num_res_blocks: 2
+                norm_num_groups: 32
+                attention_levels: [false, false, false, false]
+                use_flash_attention: false
+                with_encoder_nonlocal_attn: false
+                with_decoder_nonlocal_attn: false
+            perceptual_loss_network: squeeze
+            perceptual_loss_fake_3d_ratio: 0.5
+            disc_layers: 3
+            disc_num_channels: 64
+            load_autoenc_from_checkpoint: { INSERT_PATH_TO_CHECKPOINT }
+            kl_weight: 1.0e-07
+            adv_weight: 0.025
+            perceptual_weight: 0.001
+            lr_g: 5.0e-5
+            lr_d: 1.0e-4
+    data:
+        csv_path: { INSERT_PATH_TO_CSV }
+        batch_size: 1
+        num_workers: 16
+        val_size: 0.05
+        test_size: 0.1
+        seed: 42
+    trainer:
+        accelerator: gpu
+        devices: [0]
+        max_epochs: 100
+        logger:
+          class_path: lightning.pytorch.loggers.WandbLogger
+          init_args:
+            name: aekl_${fit.model.class_path}_${fit.model.init_args.lr_g}_${fit.model.init_args.lr_d}_${fit.model.init_args.adv_weight}_${fit.model.init_args.perceptual_weight}
+            project: 3D-AutoencoderKL
+        precision: 16-mixed
+    early_stopping:
+        monitor: val_loss
+        patience: 30
+        mode: min
+        verbose: true
+    model_checkpoint:
+        monitor: val_loss
+        mode: min
+        auto_insert_metric_name: false
+        filename: best
+        save_last: true
+        dirpath: ${fit.trainer.logger.init_args.project}/${fit.trainer.logger.init_args.name}/checkpoints/
+test:
+    seed_everything: 42
+    model:
+        class_path: src.models.LitAutoencoderKL
+    data:
+        csv_path: ${fit.data.csv_path}
+        batch_size: ${fit.data.batch_size}
+        num_workers: ${fit.data.num_workers}
+        seed: ${fit.data.seed}
+    trainer:
+        accelerator: gpu
+        devices: [0]
+        max_epochs: 1
+        logger:
+            class_path: ${fit.trainer.logger.class_path}
+            init_args:
+                name: ${fit.trainer.logger.init_args.name}
+                project: ${fit.trainer.logger.init_args.project}
+    early_stopping:
+        monitor: test_loss
+    ckpt_path: ${fit.trainer.logger.init_args.project}/${fit.trainer.logger.init_args.name}/checkpoints/best.ckpt

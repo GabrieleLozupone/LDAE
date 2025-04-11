@@ -1,0 +1,154 @@
+# config.yaml
+fit:
+    seed_everything: 42
+    model:
+        class_path: src.ldae.LatentDiffusionAutoencoders
+        init_args:
+            mode: representation-learning # pretrain or representation-learning
+            pretrained_path: ${fit.trainer.logger.init_args.project}/${fit.data.classes}_${fit.model.class_path}_pretrain_${fit.model.init_args.enc_args.backbone_args.net_class_path}/checkpoints/last.ckpt
+            unet_args:
+                input_channel: 3
+                base_channel: 256
+                channel_multiplier: [1, 2, 3]
+                num_residual_blocks_of_a_block: 2
+                attention_resolutions: [2, 4]
+                num_heads: 1
+                head_channel: -1
+                use_new_attention_order: False
+                dropout: 0.1
+                dims: 3
+            enc_args:
+                backbone_args:
+                    net_class_path: torchvision.models.convnext_small
+                    weights: torchvision.models.ConvNeXt_Small_Weights.DEFAULT
+                    freeze_perc: 0.0
+                    grayscale: True
+                emb_chans: 768
+                seq_len: 128
+            vae_args:
+                spatial_dims: 3
+                in_channels: 1
+                out_channels: 1
+                num_channels: [64, 128, 128, 128]
+                latent_channels: 3
+                num_res_blocks: 2
+                norm_num_groups: 32
+                attention_levels: [False, False, False, False]
+                with_encoder_nonlocal_attn: False
+                with_decoder_nonlocal_attn: False
+            vae_path: { INSERT_PATH_TO_PRETRAINED_VAE }
+            timesteps_args:
+                timesteps: 1000
+                betas_type: linear
+            lr: 2.5e-5
+            ema_decay: 0.999
+    data:
+        csv_path: { INSERT_PATH_TO_CSV }
+        load_latents: true
+        load_images: true
+        batch_size: 4
+        num_workers: 32
+        val_size: 0.005
+        test_size: 0.1
+        resize_to: [128, 160, 128]
+        classes: ['AD', 'CN', 'MCI']
+        seed: 42
+        apply_augmentation: False
+        fake_3d: true
+        slicing_plane: axial
+    trainer:
+        accelerator: gpu
+        devices: [0, 1]
+        max_epochs: 400
+        logger:
+          class_path: lightning.pytorch.loggers.WandbLogger
+          init_args:
+            name: ${fit.data.classes}_${fit.model.class_path}_${fit.model.init_args.mode}_${fit.model.init_args.enc_args.backbone_args.net_class_path}
+            project: 3D-BrainDiffusionAutoencoder
+        precision: 16-mixed
+        accumulate_grad_batches: 4
+        gradient_clip_val: 1.0
+        check_val_every_n_epoch: 1
+    early_stopping:
+        monitor: val_ssim
+        patience: 75
+        mode: max
+        verbose: true
+    model_checkpoint:
+        monitor: val_ssim
+        mode: max
+        auto_insert_metric_name: false
+        filename: best
+        save_last: true
+        dirpath: ${fit.trainer.logger.init_args.project}/${fit.trainer.logger.init_args.name}/checkpoints/
+test:
+    seed_everything: 42
+    model:
+        class_path: src.ldae.LatentDiffusionAutoencoders
+        init_args:
+            mode: representation-learning # pretrain or representation-learning
+            pretrained_path: ${fit.model.init_args.pretrained_path}
+            unet_args:
+                input_channel: 3
+                base_channel: 128
+                channel_multiplier: [ 1, 2, 4 ]
+                num_residual_blocks_of_a_block: 2
+                attention_resolutions: [ 2, 4 ]
+                num_heads: 1
+                head_channel: -1
+                use_new_attention_order: False
+                dropout: 0.1
+                dims: 3
+            enc_args:
+                backbone_args:
+                    net_class_path: torchvision.models.convnext_small
+                    weights: torchvision.models.ConvNeXt_Small_Weights.DEFAULT
+                    freeze_perc: 0.0
+                    grayscale: True
+                emb_chans: 768
+                seq_len: 128
+            vae_args:
+                spatial_dims: 3
+                in_channels: 1
+                out_channels: 1
+                num_channels: [ 64, 128, 128, 128 ]
+                latent_channels: 3
+                num_res_blocks: 2
+                norm_num_groups: 32
+                attention_levels: [ False, False, False, False ]
+                with_encoder_nonlocal_attn: False
+                with_decoder_nonlocal_attn: False
+            vae_path: ${fit.model.init_args.vae_path}
+            timesteps_args:
+                timesteps: 1000
+                betas_type: linear
+            lr: 2.5e-5
+            ema_decay: 0.999
+    data:
+        csv_path: ${fit.data.csv_path}
+        load_latents: true
+        load_images: true
+        batch_size: 1
+        num_workers: 4
+        val_size: ${fit.data.val_size}
+        test_size: ${fit.data.test_size}
+        resize_to: ${fit.data.resize_to}
+        classes: ${fit.data.classes}
+        seed: ${fit.data.seed}
+        apply_augmentation: ${fit.data.apply_augmentation}
+        fake_3d: ${fit.data.fake_3d}
+        slicing_plane: ${fit.data.slicing_plane}
+    trainer:
+        accelerator: gpu
+        devices: [0]
+        max_epochs: 1
+        logger:
+            class_path: ${fit.trainer.logger.class_path}
+            init_args:
+                name: ${fit.trainer.logger.init_args.name}
+                project: ${fit.trainer.logger.init_args.project}
+        log_every_n_steps: 1
+        precision: 16-mixed
+    early_stopping:
+        monitor: test_ssim_ldae_original
+    ckpt_path: ${fit.trainer.logger.init_args.project}/${fit.trainer.logger.init_args.name}/checkpoints/best.ckpt
