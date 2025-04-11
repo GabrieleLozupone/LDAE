@@ -136,9 +136,9 @@ pip install -r requirements.txt
 
 Download the following pretrained models and place them in the `models/` directory to run the tutorial:
 
-- [AutoencoderKL (AEKL)](https://www.example.com/download/autoencoderkl.pth)
-- [Semantic Encoder](https://www.example.com/download/semantic_encoder.pth)
-- [Full Generative Model](https://www.example.com/download/generative_model.pth)
+- [AutoencoderKL (AEKL)](https://drive.google.com/file/d/1GwavUxV6n_oLGwrUvXAGj6wmemEqMK4D/view?usp=sharing)
+- [Semantic Encoder](https://drive.google.com/file/d/1IfFOwtnsYoup3LvVmkkQCvC6cQHBwPMH/view?usp=sharing)
+- [Decoder (Generative Model)](https://drive.google.com/file/d/1XzvGnXD9ogK8bvuSrvBSg2PWqXPtU5O2/view?usp=sharing)
 
 ## 📊 Data Preparation
 
