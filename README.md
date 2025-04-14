@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
 ![PyTorch Lightning](https://img.shields.io/badge/PyTorch%20Lightning-2.5-b45aff)
 ![MONAI](https://img.shields.io/badge/MONAI-1.4.0-00c0b5)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/latent-diffusion-autoencoders-toward/linear-probe-classification-on-adni)](https://paperswithcode.com/sota/linear-probe-classification-on-adni?p=latent-diffusion-autoencoders-toward)
 
 Official implementation of the paper: **"[Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Imaging](https://arxiv.org/abs/2504.08635)"**.
 
