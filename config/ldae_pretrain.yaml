@@ -7,8 +7,8 @@ fit:
             mode: pretrain # pretrain or representation-learning
             unet_args:
                 input_channel: 3
-                base_channel: 128
-                channel_multiplier: [1, 2, 4]
+                base_channel: 256
+                channel_multiplier: [1, 2, 3]
                 num_residual_blocks_of_a_block: 2
                 attention_resolutions: [2, 4]
                 num_heads: 1
@@ -87,8 +87,8 @@ test:
             mode: pretrain # pretrain or representation-learning
             unet_args:
                 input_channel: 3
-                base_channel: 128
-                channel_multiplier: [ 1, 2, 4 ]
+                base_channel: 256
+                channel_multiplier: [ 1, 2, 3 ]
                 num_residual_blocks_of_a_block: 2
                 attention_resolutions: [ 2, 4 ]
                 num_heads: 1

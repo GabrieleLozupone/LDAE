@@ -6,7 +6,7 @@
 ![PyTorch Lightning](https://img.shields.io/badge/PyTorch%20Lightning-2.5-b45aff)
 ![MONAI](https://img.shields.io/badge/MONAI-1.4.0-00c0b5)
 
-Official implementation of the paper: **"Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Imaging"**.
+Official implementation of the paper: **"[Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Imaging](https://arxiv.org/abs/2504.08635)"**.
 
 <p align="center">
   <img src="readme_files/LDAE.png" alt="LDAE Framework Overview"/>
@@ -310,11 +310,14 @@ LDAE maintains high reconstruction quality (SSIM > 0.93) when interpolating betw
 
 If you use this work, please cite:
 ```bibtex
-@article{lozupone2025latent,
-  title={Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Imaging},
-  author={Gabriele Lozupone et al.},
-  journal={Medical Image Analysis},
-  year={2025}
+@misc{lozupone2025latentdiffusionautoencodersefficient,
+      title={Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Imaging}, 
+      author={Gabriele Lozupone and Alessandro Bria and Francesco Fontanella and Frederick J. A. Meijer and Claudio De Stefano and Henkjan Huisman},
+      year={2025},
+      eprint={2504.08635},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2504.08635}, 
 }
 ```
 
