@@ -14,7 +14,7 @@ Official implementation of the paper: **"[Latent Diffusion Autoencoders: Toward 
 </p>
 
 <p align="center">
-  <em>A novel unsupervised diffusion-based framework for representation learning in 3D medical imaging</em>
+  <em>A novel unsupervised diffusion-based foundation model for representation learning in 3D medical imaging</em>
 </p>
 
 ## 📑 Table of Contents
