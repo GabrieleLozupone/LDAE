@@ -45,8 +45,8 @@ class LatentDiffusionAutoencoders(L.LightningModule):
         self.ema_update_after_step = ema_update_after_step
 
         # Set the metrics
-        self.ssim = SSIMMetric(spatial_dims=3, data_range=1.0, kernel_size=4)
-        self.mssim = MultiScaleSSIMMetric(spatial_dims=3, data_range=1.0, kernel_size=4)
+        self.ssim = SSIMMetric(spatial_dims=3, data_range=1.0, kernel_size=3)
+        self.mssim = MultiScaleSSIMMetric(spatial_dims=3, data_range=1.0, kernel_size=3)
 
         # Diffusion helper
         self.gaussian_diffusion = GaussianDiffusion(
