@@ -26,6 +26,7 @@ Official implementation of the paper: **"[Latent Diffusion Autoencoders: Toward 
   - [Stochastic Variation](#-stochastic-variation)
   - [Interpolation](#-interpolation)
 - [Installation](#-installation)
+  - [Pretrained Models](#pretrained-models)
 - [Data Preparation](#-data-preparation)
 - [Usage](#-usage)
 - [Results](#-results)
@@ -61,6 +62,8 @@ LDAE consists of four main components:
 4. **Gradient Estimator (`Gψ`)** - A conditional decoder approximating ∇z log p(y|z), guiding the reverse diffusion.
 
 The framework operates by first compressing the high-dimensional MRI scans into a more manageable latent space, where the diffusion process can operate efficiently. The semantic encoder extracts meaningful clinical features from the MRI scans, which are then used to guide the generative process. This approach allows for both efficient representation learning and semantic control over the generated outputs.
+
+Pretrained checkpoints for these components are listed under [Installation > Pretrained Models](#-pretrained-models).
 
 ## 🧠 Framework Capabilities
 
@@ -133,13 +136,14 @@ conda activate ldae
 pip install -r requirements.txt
 ```
 
-### Pretrained Models
+###  📦 Pretrained Models
 
 Download the following pretrained models and place them in the `models/` directory to run the tutorial:
 
 - [AutoencoderKL (AEKL)](https://drive.google.com/file/d/1GwavUxV6n_oLGwrUvXAGj6wmemEqMK4D/view?usp=sharing)
 - [Semantic Encoder](https://drive.google.com/file/d/1IfFOwtnsYoup3LvVmkkQCvC6cQHBwPMH/view?usp=sharing)
 - [Decoder (Generative Model)](https://drive.google.com/file/d/1XzvGnXD9ogK8bvuSrvBSg2PWqXPtU5O2/view?usp=sharing)
+
 
 ## 📊 Data Preparation
 
